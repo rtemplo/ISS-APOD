@@ -134,7 +134,18 @@ function findISSPasses(){
 		//pt_Promises
 		//This is a simpler version which doesn't check to see whether the promise was resolved or rejected 
 		$.when.apply(null, pt_Promises).done(function(){
-			console.log(passTimesObj);
+			console.log("passTimesObj: " + passTimesObj);
+			
+			var reSort = function (val1, val2) {
+				//just change the < symbol to > to sort in reverse
+				if (val1.key < val2.key) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+			
+			passTimesObj.sort(reSort);
 			
 			for (var i=0; i < passTimesObj.length; i++) {
 				writePassTimes(passTimesObj[i].key, passTimesObj[i].date, passTimesObj[i].duration, passTimesObj[i].weather, passTimesObj[i].daylight);
