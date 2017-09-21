@@ -206,6 +206,9 @@ function initUserMap() {
 $(document).on("click", "#weatherSubmit", getAddressLocation);
 
 function getAddressLocation(){
+	$("#iss").show();
+	$("#eonet").hide();
+	
 	event.preventDefault();
 	
 	userLocInput = $("#input-address").val().trim();

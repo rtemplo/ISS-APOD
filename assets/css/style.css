@@ -47,3 +47,30 @@
 #passTimeRow tr {
 	cursor: pointer;
 }
+
+#original-card {
+	display: none !important;
+}
+
+.image-card {
+	width: 220px; 
+	height: 220px; 
+	margin: 10px;
+	padding: 4px;
+	text-align: center;
+}
+	
+.image-holder {
+	width: 210px;
+	height: 210px;
+}
+	
+.image-holder > img {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.card-block {
+	overflow: auto;
+	height: 25px;
+}

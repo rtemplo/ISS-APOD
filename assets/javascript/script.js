@@ -23,6 +23,7 @@ function rotateBackground() {
 		imageIdx = 0;
 	} else {
 		imageIdx++;
+		console.log(imageIdx);
 		setBackground(imageArr[imageIdx].imgURL);
 	}
 }
@@ -105,8 +106,71 @@ function build_IOD_DropDownMenu() {
 	
 }
 
+function getLandSatImages() {
+	$("#result-container").empty();
+	
+	if (isUserAddress) {
+	
+		var currentDate = moment().subtract(1, 'Y').format("YYYY-MM-DD");
+		var base_url = "https://api.nasa.gov/planetary/earth/imagery?lon=" + userLongitude + "&lat=" + userLatitude + "&cloud_score=True&api_key=bbPOCharYjXyZCE7ZZ1BymfN7mCvprFB2nXIRSDq";
+		//console.log(ls_url);
+
+		var _date = currentDate;
+		var eo_promises = []; 
+		var request;
+
+		for (var i = 0; i < 4; i++) {
+			ls_url = base_url + "&date=" + _date;
+
+			request = $.ajax({
+				url: ls_url,
+				method: "GET",
+				dataType: "json",
+				idxKey: i
+			});		
+
+			eo_promises.push(request);
+
+			_date = moment(_date).subtract(6, 'M').format("YYYY-MM-DD");
+		}
+
+		$.when.apply(null, eo_promises).done(function () {
+			for (var i = 0; i < arguments.length; i++) {
+				var imgURL, cardText;
+				if (arguments[i][0].hasOwnProperty("error")) {
+					imgURL = "#";
+					cardText = "NA";
+				} else {
+					imgURL = arguments[i][0].url;
+					cardText = arguments[i][0].date;
+				}
+
+				var imagecard = $("#original-card").clone().removeAttr("id");
+
+				imagecard.find("img").attr("src", imgURL);
+				imagecard.find(".card-block").html('<a href="'+imgURL+'" target="_blank">' + cardText + "</a>");
+				imagecard.appendTo("#result-container");
+			}
+		});
+
+	} 
+	
+}
+
 $(document).ready(function () {
+	$("#eonet").hide();
 	loadAPODImages();
+	
+	$("#iss-tracker-link").on("click", function () {
+		$("#eonet").hide();
+		$("#iss").fadeIn();
+	})	
+	
+	$("#eonet-link").on("click", function () {
+		$("#iss").hide();
+		$("#eonet").fadeIn();
+		getLandSatImages();
+	})
 	
 	$(document).on("click", ".iod-item", function (e) {
 		e.preventDefault();

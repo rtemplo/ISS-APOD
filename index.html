@@ -24,15 +24,12 @@
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 	
 		<ul class="navbar-nav mr-auto">
-<!--
 			<li class="nav-item active">
-			<a class="nav-link" href="#">Weather <span class="sr-only">(current)</span></a>
+				<a class="nav-link" href="#" id="iss-tracker-link">Viewing Times<span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link" href="#">Notify Me</a>
+				<a class="nav-link" href="#" id="eonet-link">EONET</a>
 			</li>
--->
-			
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Picture of the Day</a>
 				<div class="dropdown-menu" id="IOD-ddList">
@@ -53,66 +50,86 @@
 
 <!-- Begin page content -->
 <div class="container">
-	<div class="row">
-		<div class="col-md-8 mb-2">
-			<div class="mr-2">
-				<div class="row mb-2">
-					<div class="col-md-12 section-container">
-						<h4 class="translucent-elm rounded-border p-2">ISS Current Location</h4>
-						<div id="map"></div>
+	<div id="iss">
+		<div class="row">
+			<div class="col-md-8 mb-2">
+				<div class="mr-2">
+					<div class="row mb-2">
+						<div class="col-md-12 section-container">
+							<h4 class="translucent-elm rounded-border p-2">ISS Current Location</h4>
+							<div id="map"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 section-container">
+							<h4 class="translucent-elm rounded-border p-2">ISS Pass Time Predictions</h4>
+							<table class="table table-sm table-hover translucent-elm">
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Est. Duration (seconds)</th>
+										<th>Weather</th>
+										<th>Daylight</th>
+									</tr>
+								</thead>
+								<tbody id="passTimeRow">
+								</tbody>
+							</table>					
+						</div>
 					</div>
 				</div>
+			</div>
+			<div class="col-md-4">
 				<div class="row">
-					<div class="col-12 section-container">
-						<h4 class="translucent-elm rounded-border p-2">ISS Pass Time Predictions</h4>
-						<table class="table table-sm table-hover translucent-elm">
-							<thead>
-								<tr>
-									<th>Date</th>
-									<th>Est. Duration (seconds)</th>
-									<th>Weather</th>
-									<th>Daylight</th>
-								</tr>
-							</thead>
-							<tbody id="passTimeRow">
-							</tbody>
-						</table>					
+					<div class="col-12 d-flex flex-column section-container">
+						<h4 class="translucent-elm rounded-border p-2">Predicted Conditions</h4>
+						<div class="d-flex justify-content-center bg-white p-2">
+							<i id="weather-icon-display" class=""></i>
+						</div>
+						<table class="table translucent-elm">
+							<tr>
+								<th scope="row">Description</td>
+								<td id="weather-desc-display">--</td>
+							</tr>					
+							<tr>
+								<th scope="row">Temperature</td>
+								<td id="temp-display">--</td>
+							</tr>
+							<tr>
+								<th scope="row">Precipitation</td>
+								<td id="precip-chance-display">--</td>
+							</tr>						
+							<tr>
+								<th scope="row">Humidity</td>
+								<td id="humidity-display">--</td>
+							</tr>	
+							<tr>
+								<th scope="row">Wind Speed</td>
+								<td id="wind-speed-display">--</td>
+							</tr>																	
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
-			<div class="row">
-				<div class="col-12 d-flex flex-column section-container">
-					<h4 class="translucent-elm rounded-border p-2">Predicted Conditions</h4>
-					<div class="d-flex justify-content-center bg-white p-2">
-						<i id="weather-icon-display" class=""></i>
-					</div>
-					<table class="table translucent-elm">
-						<tr>
-							<th scope="row">Description</td>
-							<td id="weather-desc-display">--</td>
-						</tr>					
-						<tr>
-							<th scope="row">Temperature</td>
-							<td id="temp-display">--</td>
-						</tr>
-						<tr>
-							<th scope="row">Precipitation</td>
-							<td id="precip-chance-display">--</td>
-						</tr>						
-						<tr>
-							<th scope="row">Humidity</td>
-							<td id="humidity-display">--</td>
-						</tr>	
-						<tr>
-							<th scope="row">Wind Speed</td>
-							<td id="wind-speed-display">--</td>
-						</tr>																	
-					</table>
+	</div>
+	
+	<div id="eonet">
+		<div class="row">
+			<div class="card w-100 mt-2 p-2 bg-dark">
+				<h5 class="text-light">Image Timeline</h5>		
+				<div class="d-flex flex-row flex-wrap justify-content-around" id="result-container">			
 				</div>
-			</div>
+			</div>		
 		</div>
+	</div>
+</div>
+
+<div class="card image-card bg-light" id="original-card">
+	<div class="image-holder">
+		<img src="#" class="img-fluid giphy-src" data-animsrc="#" alt="">
+	</div>
+	<div class="card-block small">
 	</div>
 </div>
 
