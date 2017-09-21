@@ -2,12 +2,12 @@ var WEATHERJS = {
 	APIkey: "fa89ff476fdecb19b7416bfaf4fcf6e1",
 	searchWeather: function(address){
 		var temp = "https://api.openweathermap.org/data/2.5/weather?q=" + address + "&appid=" + WEATHERJS.APIkey;
-		console.log(temp);
+		//console.log(temp);
 		$.ajax({
 			url: temp,
 			method: "GET"
 		}).done(function(re){
-			console.log(re);
+			//console.log(re);
 			$("#weatherWrite").html(re.main.temp + "<br>" +
 															re.visibility + "<br>" +
 															re.clouds.all);
@@ -29,16 +29,16 @@ var WEATHERJS = {
 				temp2 = Math.abs(issPassTimes[this.key].risetime - parseInt(re.list[i].dt));
 				if (temp2 < temp){
 					temp = temp2;
-					console.log(re.list[i]);
+					//console.log(re.list[i]);
 					closest = re.list[i];
 				}
 			}
 						
 			if(closest.weather[0].main === 'Clear'){
-				console.log("Show clear icon");
+				//console.log("Show clear icon");
 				$("#pt_" + this.key + " td:nth-child(3)").text("CLEAR SKIES");
 			} else {
-				console.log("Hide clear icon");
+				//console.log("Hide clear icon");
 				$("#pt_" + this.key + " td:nth-child(3)").text("NOT CLEAR SKIES");
 			}
 
@@ -47,10 +47,10 @@ var WEATHERJS = {
 		});
 	},
 	writeWeather: function(event){
-		console.log(event);
-		console.log(this);
+		//console.log(event);
+		//console.log(this);
 		let obj = $(this).data("fcast");
-		console.log(obj);
+		//console.log(obj);
 		$("#weather-icon-display").addClass("owi owi-10x owi-" + obj.weather[0].icon);
 		$("#temp-display").text((obj.main.temp * (9/5) - 459.67).toFixed(2) + "F");
 		//$("#weather-text-display").text(obj.weather[0].main);

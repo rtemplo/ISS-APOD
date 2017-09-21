@@ -97,17 +97,17 @@ function findISSPasses(){
 					dataType: "jsonp",
 					myKey2: outerAJAXKey
 				}).done(function(response){
-					console.log("Twilight Begin UTC: " + response.results.astronomical_twilight_begin);
+					//console.log("Twilight Begin UTC: " + response.results.astronomical_twilight_begin);
 
 					var ts_begin = moment(sunsetDate + ", " + response.results.astronomical_twilight_begin, "YYYY-MM-DD, h:mm:ss a").valueOf();
 					var sunRiseTimeStamp = moment(ts_begin)/1000;
 
-					console.log("sunRiseTimeStamp: " + sunRiseTimeStamp);
-					console.log("sunRiseTimeStamp Datetime: " + moment.unix(sunRiseTimeStamp).format("YYYY-MM-DD, h:mm:ss a"));
+					//console.log("sunRiseTimeStamp: " + sunRiseTimeStamp);
+					//console.log("sunRiseTimeStamp Datetime: " + moment.unix(sunRiseTimeStamp).format("YYYY-MM-DD, h:mm:ss a"));
 
 					var adjustedSunRiseTimeStamp = sunRiseTimeStamp + totalOffset;
-					console.log("adjustedSunRiseTimeStamp: " + adjustedSunRiseTimeStamp);
-					console.log("adjustedSunRiseTimeStamp Datetime: " + moment.unix(adjustedSunRiseTimeStamp).format("YYYY-MM-DD, hh:mm:ss a"));
+					//console.log("adjustedSunRiseTimeStamp: " + adjustedSunRiseTimeStamp);
+					//console.log("adjustedSunRiseTimeStamp Datetime: " + moment.unix(adjustedSunRiseTimeStamp).format("YYYY-MM-DD, hh:mm:ss a"));
 
 					var ts_end = moment(sunsetDate + ", " + response.results.astronomical_twilight_end, "YYYY-MM-DD, h:mm:ss a").valueOf();
 					var sunSetTimeStamp = moment(ts_end)/1000;
@@ -134,7 +134,7 @@ function findISSPasses(){
 		//pt_Promises
 		//This is a simpler version which doesn't check to see whether the promise was resolved or rejected 
 		$.when.apply(null, pt_Promises).done(function(){
-			console.log("passTimesObj: " + passTimesObj);
+			//console.log("passTimesObj: " + passTimesObj);
 			
 			var reSort = function (val1, val2) {
 				//just change the < symbol to > to sort in reverse
