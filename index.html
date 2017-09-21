@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ISS Tracker</title>
+<!--Bootstrap and JQueryUI should be mutually exclusive-->
+<link rel="stylesheet" href="assets/css/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/css/style.css">
+<link href="assets/css/sticky-footer_w-fixed-nav.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/open-weather-icons.css">
+</head>
+
+<body class="main">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	<a class="navbar-brand" href="#">ISS Tracker</a>
+	
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	
+	<div class="collapse navbar-collapse" id="navbarCollapse">
+	
+		<ul class="navbar-nav mr-auto">
+<!--
+			<li class="nav-item active">
+			<a class="nav-link" href="#">Weather <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="#">Notify Me</a>
+			</li>
+-->
+			
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Picture of the Day</a>
+				<div class="dropdown-menu" id="IOD-ddList">
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#" id="auto-play-iod"><span class="octicon octicon-triangle-right">Auto Play</span></a>
+					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#calendarModal"><span class="octicon octicon-calendar"> Pick a Pic</span></a>
+				</div>
+			</li>			
+			
+		</ul>
+		
+		<form class="form-inline mt-2 mt-md-0" id="locEntryForm">
+			<input class="form-control mr-sm-2" type="text" placeholder="Enter a location" id="input-address" name="address" aria-label="Enter your location" autocomplete="off">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="weatherSubmit">Map it</button>
+		</form>
+	</div>
+</nav>
+
+<!-- Begin page content -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 mb-2">
+			<div class="mr-2">
+				<div class="row mb-2">
+					<div class="col-md-12 section-container">
+						<h4 class="translucent-elm rounded-border p-2">ISS Current Location</h4>
+						<div id="map"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 section-container">
+						<h4 class="translucent-elm rounded-border p-2">ISS Pass Time Predictions</h4>
+						<table class="table table-sm table-hover translucent-elm">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Est. Duration (seconds)</th>
+									<th>Weather</th>
+									<th>Daylight</th>
+								</tr>
+							</thead>
+							<tbody id="passTimeRow">
+							</tbody>
+						</table>					
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="row">
+				<div class="col-12 d-flex flex-column section-container">
+					<h4 class="translucent-elm rounded-border p-2">Predicted Conditions</h4>
+					<div class="d-flex justify-content-center bg-white p-2">
+						<i id="weather-icon-display" class=""></i>
+					</div>
+					<table class="table translucent-elm">
+						<tr>
+							<th scope="row">Description</td>
+							<td id="weather-desc-display">--</td>
+						</tr>					
+						<tr>
+							<th scope="row">Temperature</td>
+							<td id="temp-display">--</td>
+						</tr>
+						<tr>
+							<th scope="row">Precipitation</td>
+							<td id="precip-chance-display">--</td>
+						</tr>						
+						<tr>
+							<th scope="row">Humidity</td>
+							<td id="humidity-display">--</td>
+						</tr>	
+						<tr>
+							<th scope="row">Wind Speed</td>
+							<td id="wind-speed-display">--</td>
+						</tr>																	
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer">
+	<div class="container text-center">
+		<span class="text-muted">ISS Tracker by Andrew Apicello, Kevin Kung, and Ray Templo</span>
+	</div>
+</footer>
+
+<!-- Modal -->
+<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="calendarModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="calendarModalLabel">Pick a Date for a Picture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+		<div id="datepicker"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="iodModal" tabindex="-1" role="dialog" aria-labelledby="iodModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="iodModalLabel">Select a new background</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+      	<div id="modalImageArea">
+      	<div id="iodHolder">
+      		<img id="selected-iod" class="img-fluid img-thumbnail" src="" alt="">
+      	</div>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--BEGIN SCRIPTS LAYER-->
+<!--JQuery-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+<!--Moment JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<!--Bootstrap 4-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+<!--Firebase-->
+<!--<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>-->
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuWbn6QuWQ6-CsQN6N_0hpkmTGXJQooAg&callback=initMap"></script>
+<script type="text/javascript" src='assets/javascript/sorts.js'></script>
+<script type="text/javascript" src='assets/javascript/map.js'></script>
+<!--<script type="text/javascript" src='assets/javascript/space_image.js'></script>-->
+<script type="text/javascript" src='assets/javascript/weather.js'></script>
+<script type="text/javascript" src='assets/javascript/proximity.js'></script>
+
+
+<!--Custom-->
+<script src="assets/javascript/script.js"></script>
+<!--END SCRIPTS LAYER-->
+
+</body>
+</html>
